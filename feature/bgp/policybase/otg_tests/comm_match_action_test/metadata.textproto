@@ -35,9 +35,24 @@ platform_exceptions:  {
     bgp_rib_oc_path_unsupported: true
   }
 }
+# Cisco 26.3+: send-community leaf is not-supported; use afi-safi send-community-type.
 platform_exceptions:  {
   platform:  {
     vendor: CISCO
+    software_version_regex: "(26\\.([3-9]|1[0-9])|2[7-9]|3[0-9])\\..*"
+  }
+  deviations:  {
+    bgp_community_set_refs_unsupported: true
+    bgp_conditions_match_community_set_unsupported:  true
+    skip_bgp_peer_group_send_community_type: true
+    skip_setting_statement_for_policy: true
+  }
+}
+# Cisco pre-26.3: use legacy send-community leaf.
+platform_exceptions:  {
+  platform:  {
+    vendor: CISCO
+    software_version_regex: "(2[0-5]\\.|26\\.(0|1|2)\\.).*"
   }
   deviations:  {
     bgp_community_set_refs_unsupported: true
